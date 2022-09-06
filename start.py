@@ -1,13 +1,8 @@
 import sys
-from datetime import datetime as dt
 
 from builders.galaxy_studio_win64 import GalaxyStudioWin64Builder
 from configs.build_config import BuildConfig
-
-
-def log(msg):
-    print(f"{dt.now().strftime('%H:%M:%S')}: {msg}", flush=True)
-
+from globals import log
 
 argv = sys.argv[1:]
 

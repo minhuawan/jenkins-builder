@@ -1,8 +1,8 @@
 import os
 import sys
 
-from configs import static_config
-from start import log
+from configs import runtime_config
+from globals import log, execute_command
 
 
 class BuildConfig:
@@ -17,10 +17,10 @@ class BuildConfig:
         self.branch = branch
         self.ext_args = ext_args
 
-        job_name = static_config.get_job_name()
-        build_number = static_config.get_build_number()
-        output_root_path = static_config.get_workshop_output_root_path()
-        project_root_path = static_config.get_workshop_project_root_path()
+        job_name = runtime_config.get_job_name()
+        build_number = runtime_config.get_build_number()
+        output_root_path = runtime_config.get_workshop_output_root_path()
+        project_root_path = runtime_config.get_workshop_project_root_path()
         # E://ci-repos//test//master
         self.project_path = os.path.join(project_root_path, self.project_name, self.branch)
         self.log_path = os.path.join(self.project_path, 'build.log')
@@ -45,22 +45,24 @@ class BuildConfig:
 
     def check_local_repo(self):
         if not os.path.exists(self.project_path):
-            git_url = static_config.get_repo_git_url(self.project_name)
+            git_url = runtime_config.get_repo_git_url(self.project_name)
             assert git_url, f'git url is None, repo name: {self.project_name}'
             assert self.branch, 'branch is None'
-            command = f'git clone {git_url} -b {self.branch} {self.project_path}'
+            command = [
+                'git', 'clone', git_url, '-b', self.branch, self.project_path
+            ]
             log(f'target repo not existed, start clone with command: {command}')
-            os.system(command)
-
-        log(f'start pull {self.project_path} with branch {self.branch}')
-        os.chdir(self.project_path)
-        os.system(f'git clean -df')
-        os.system(f'git fetch')
-        os.system(f'git reset --hard origin/{self.branch}')
+            execute_command(command)
+        else:
+            log(f'start pull {self.project_path} with branch {self.branch}')
+            os.chdir(self.project_path)
+            execute_command(['git', 'clean', '-df'])
+            execute_command(['git', 'fetch', '-v'])
+            execute_command(['git', 'reset', '--hard', f'origin/{self.branch}'])
 
     def get_build_command_args(self, execute_method):
         assert execute_method, 'no execute method'
-        editor_path = static_config.get_unity_editor_path(self.project_name)
+        editor_path = runtime_config.get_unity_editor_path(self.project_name)
         build_args = [
             editor_path,
             f'-logfile',

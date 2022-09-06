@@ -11,11 +11,11 @@ if sys.platform == 'win32':
 PROJECTS = {
     "ci-test": {
         "unity_version": "2020.3.30f1",
-        "git_url": "https://git.bilibili.co/wanminhua/ci-test",
+        "git_url": "git@git.bilibili.co:wanminhua/ci-test.git",
     },
     "galaxy-studio": {
         "unity_version": "2021.2.11f1",
-        "git_url": "https://git.bilibili.co/live-unity/galaxy_studio.git",
+        "git_url": "git@git.bilibili.co:live-unity/galaxy_studio.git",
     }
 }
 
