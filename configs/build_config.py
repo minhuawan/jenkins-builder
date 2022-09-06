@@ -2,6 +2,7 @@ import os
 import sys
 
 from configs import static_config
+from start import log
 
 
 class BuildConfig:

@@ -2,6 +2,7 @@ import os
 import subprocess as sp
 
 from configs.build_config import BuildConfig
+from start import log
 
 
 class GalaxyStudioWin64Builder:
@@ -16,7 +17,7 @@ class GalaxyStudioWin64Builder:
         output_path = os.path.join(self.config.output_path, 'galaxy_studio', 'galaxy_studio.exe')
         self.config.set_output_path(output_path)
         args = self.config.get_build_command_args('Builder.BuildFromCI')
-        print('build args: ', args)
+        log(f'build args: {args}')
         # code = sp.call(args)
         # if code == 0:
         #     if '--showlog' in self.config.ext_args:
@@ -29,7 +30,7 @@ class GalaxyStudioWin64Builder:
 
     def after_build(self):
         if not os.path.exists(self.config.output_path):
-            print(f'output path not exist! {self.config.output_path}')
+            log(f'output path not exist! {self.config.output_path}')
             exit(1)
 
         # abspath = os.path.abspath(self.config.output_path)

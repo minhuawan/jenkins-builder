@@ -1,12 +1,8 @@
-import datetime
 import sys
-import time
 from datetime import datetime as dt
 
 from builders.galaxy_studio_win64 import GalaxyStudioWin64Builder
 from configs.build_config import BuildConfig
-
-global log
 
 
 def log(msg):
