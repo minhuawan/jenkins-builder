@@ -17,13 +17,13 @@ class GalaxyStudioWin64Builder:
         self.config.set_output_path(output_path)
         args = self.config.get_build_command_args('Builder.BuildFromCI')
         print('build args: ', args)
-        code = sp.call(args)
-        if code == 0:
-            if '--showlog' in self.config.ext_args:
-                self.config.print_log()
-        else:
-            self.config.print_log()
-            exit(code)
+        # code = sp.call(args)
+        # if code == 0:
+        #     if '--showlog' in self.config.ext_args:
+        #         self.config.print_log()
+        # else:
+        #     self.config.print_log()
+        #     exit(code)
 
         self.after_build()
 

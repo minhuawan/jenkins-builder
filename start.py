@@ -1,7 +1,17 @@
+import datetime
 import sys
+import time
+from datetime import datetime as dt
 
 from builders.galaxy_studio_win64 import GalaxyStudioWin64Builder
 from configs.build_config import BuildConfig
+
+global log
+
+
+def log(msg):
+    print(f"{dt.now().strftime('%H:%M:%S')}: {msg}", flush=True)
+
 
 argv = sys.argv[1:]
 
@@ -26,7 +36,7 @@ def get_arg_index(args, arg_name):
 
 
 if __name__ == "__main__":
-    print('enter args', argv)
+    log(f'enter args {argv}')
     config = parse_config()
     builder = get_arg_index(argv, '--builder')
     assert builder in BUILDERS, f'builder not found in builders, name: {builder}'

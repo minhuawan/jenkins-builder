@@ -25,9 +25,9 @@ class BuildConfig:
         self.log_path = os.path.join(self.project_path, 'build.log')
         self.output_path = os.path.join(output_root_path, job_name, build_number)
 
-        print(f'repo path: {self.project_path}')
-        print(f'log path: {self.log_path}')
-        print(f'preset output path: {self.output_path}')
+        log(f'repo path: {self.project_path}')
+        log(f'log path: {self.log_path}')
+        log(f'preset output path: {self.output_path}')
 
     def get_project_path(self):
         return self.project_path
@@ -37,7 +37,7 @@ class BuildConfig:
 
     def set_output_path(self, output_path):
         self.output_path = output_path
-        print(f'set output path: {self.output_path}')
+        log(f'set output path: {self.output_path}')
 
     def get_log_path(self):
         return self.log_path
@@ -48,9 +48,10 @@ class BuildConfig:
             assert git_url, f'git url is None, repo name: {self.project_name}'
             assert self.branch, 'branch is None'
             command = f'git clone {git_url} -b {self.branch} {self.project_path}'
-            print(f'target repo not existed, start clone with command: {command}')
+            log(f'target repo not existed, start clone with command: {command}')
             os.system(command)
 
+        log(f'start pull {self.project_path} with branch {self.branch}')
         os.chdir(self.project_path)
         os.system(f'git clean -df')
         os.system(f'git fetch')
