@@ -1,0 +1,24 @@
+﻿{
+  "postBuildCopyItems": [
+    {
+      "key": "xk_dll_path",
+      "src": "D:\\data\\sdkRedist",
+      "dest_offset": ""
+    },
+    {
+      "key": "plugin_dll_path",
+      "src": "D:\\data\\plugins",
+      "dest_offset": ""
+    },
+    {
+      "key": "plugin_niuniu",
+      "src": "D:\\data\\plugins-niuniu",
+      "dest_offset": "BepInEx\\plugins"
+    },
+    {
+      "key": "plugin_niuniu_asset",
+      "src": "D:\\data\\niuniu",
+      "dest_offset": "galaxy_studio_Data\\StreamingAssets"
+    }
+  ]
+}

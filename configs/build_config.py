@@ -23,7 +23,7 @@ class BuildConfig:
         project_root_path = runtime_config.get_workshop_project_root_path()
         # E://ci-repos//test//master
         self.project_path = os.path.join(project_root_path, self.project_name, self.branch)
-        self.log_path = os.path.join(self.project_path, 'build.log')
+        self.log_path = os.path.join(self.project_path, 'Logs', 'ci-build.log')
         self.output_path = os.path.join(output_root_path, job_name, build_number)
 
         log(f'repo path: {self.project_path}')
@@ -44,8 +44,8 @@ class BuildConfig:
         return self.log_path
 
     def check_local_repo(self):
+        git_url = runtime_config.get_repo_git_url(self.project_name)
         if not os.path.exists(self.project_path):
-            git_url = runtime_config.get_repo_git_url(self.project_name)
             assert git_url, f'git url is None, repo name: {self.project_name}'
             assert self.branch, 'branch is None'
             command = [
@@ -57,7 +57,7 @@ class BuildConfig:
             log(f'start pull {self.project_path} with branch {self.branch}')
             os.chdir(self.project_path)
             execute_command(['git', 'clean', '-df'])
-            execute_command(['git', 'fetch', '-v'])
+            execute_command(['git', 'fetch', '-p', git_url, self.branch])
             execute_command(['git', 'reset', '--hard', f'origin/{self.branch}'])
 
     def get_build_command_args(self, execute_method):
@@ -69,6 +69,8 @@ class BuildConfig:
             f'{self.log_path}',
             f'-ProjectPath',
             f'{self.project_path}',
+            # f'-noUpm',  # no unity package manager
+            # f'-ignoreCompilerErrors',
             f'-quit',
             f'-batchmode',
             f'-executeMethod',

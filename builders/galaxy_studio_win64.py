@@ -19,7 +19,7 @@ class GalaxyStudioWin64Builder:
         self.raw_output_path = self.config.output_path
         output_path = os.path.join(self.config.output_path, 'galaxy_studio', 'galaxy_studio.exe')
         self.config.set_output_path(output_path)
-        args = self.config.get_build_command_args('Builder.BuildFromCI')
+        args = self.config.get_build_command_args('EditorBuild.EditorBuildHelper.BuildFromCI')
         return args
 
     def start_build(self):
